@@ -1,0 +1,400 @@
+class User {
+    publicread string username;
+}
+
+class LoginManager {
+    public User authenticate(string username, string password);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
+
+class HelloWorld {
+    private int helloCount;
+    
+    public string sayHello(string username);
+}
