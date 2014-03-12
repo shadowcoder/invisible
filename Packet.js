@@ -1,4 +1,4 @@
-var iclass = require("../classParse")("../virtualground.iclass");
+var iclass = require("./classParse")("../virtualground.iclass");
 
 function Packet(buf){
     this.buf = buf;
@@ -18,7 +18,9 @@ Packet.prototype.readInt64 = function(){ this.offset += 8; return this.buf.readU
 Packet.prototype.readBlob = function(l){ var b = new Buffer(l); this.buf.copy(b, 0, this.offset, this.offset+l); this.offset+=l; return b};
 Packet.prototype.readString = function(){ return this.readBlob(this.readUInt16()).toString(); }
 Packet.prototype.readType = function(t) {
-    if(t.indexOf("]") && arraySize=t.match(/^([^\[]*)\[([0-9]*)\]$/)) {
+    if(t.indexOf("]") > -1) { // TODO: optimize regex
+        var arraySize = t.match(/^([^\[]*)\[([0-9]*)\]$/);
+        console.log(t+" "+arraySize)
         if(arraySize[2].length) var len = arraySize[2];
         else len = this.readUInt16();
         
@@ -41,6 +43,7 @@ Packet.prototype.readType = function(t) {
                 nclass.childArr[i].value = this.readType(iclass[t].childArr[i].datatype); 
         return nclass;
     }
+    console.log("ERROR: Unknown type "+t);
 }
 function OutPacket(){
     this.buf = [];
@@ -63,7 +66,7 @@ OutPacket.prototype.writeType = function(t,v) {
             this.writeUInt16(len);
         }
         
-        while(len--) this.writeType(arraySize[1]));
+        while(len--) this.writeType(arraySize[1]);
     }
     if(t == "uint8")  this.writeUInt8(v);
     if(t == "uint16") this.writeUInt16(v);

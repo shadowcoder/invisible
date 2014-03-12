@@ -8,5 +8,5 @@ class Room {
 class User {
     public void User(string name);
     serverwrite string name;
-    private void move(int x, int y);
+    private void move(int16 x, int16 y);
 }

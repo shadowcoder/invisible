@@ -13,7 +13,7 @@ function netConstruct(class_n) {
     return objs.length - 1;
 }
 
-var lobby = netConstruct("Room", "Lobby");
+var shadowcoder = netConstruct("User", "shadowcoder");
 
 net.createServer(function(conn) {
     conn.on('data', function(d) {
@@ -26,10 +26,14 @@ net.createServer(function(conn) {
             var field = objs[objID].childArr[property];
             console.log(field);
             
-            if(field.type == 'method') {
+            //TODO: access, logic
+            if(field[1].type == 'method') {
                 // recursively read parameters
-            } else if(field.type == 'declaration') {
-                // read type
+                var params = [];
+                for(var i = 0; i < field[1].params.length; i++) params.push(d.readType(field[1].params[i][1]));
+                console.log(field[0]+"("+params+")");
+            } else if(field[1].type == 'declaration') {
+                field[1].value = d.readType(field[1].datatype);
             }
         }
     });
