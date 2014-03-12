@@ -10,13 +10,14 @@ function serializeLine(line) {
             {
                 type: pcomps[0],
                 parent: true,
-                children: {}
+                children: {},
+                childArr: []
             }
         ];
     } else if(!global && line.trim() == "}") {
         global = true;
         return 1;
-    } else if(!global && /^\s*([^ (]* )*([^ ;]*);$/.test(line)) { // declaration
+    } else if(!global && /^\s*([^ (]* )*([^ ;]*);$/.test(line) && line.indexOf("(") == -1) { // declaration
         var dcomps = line.trim().slice(0, -1).split(' ');        
         return [
             dcomps[dcomps.length-1],
@@ -28,6 +29,7 @@ function serializeLine(line) {
         ];
     } else if(!global && /^\s*([^ ]*)? ([^ ]*) ([^\(]*)\((?:,?[\s]*([^ ]*) ([^,\)]*))*\);$/.test(line)) { // method
         var mcomps = line.trim().match(/([^ ]*)? ?([^ ]*) ([^\(]*)\(([^\)]*)\);/);
+        console.log(line+mcomps);
         var params = [],
             paraml = mcomps[4].split(',');
         for(var i = 0; i < paraml.length; ++i) {
@@ -56,7 +58,10 @@ module.exports = function(file) {
         var res = serializeLine(lines[x]);
     
         if(preglobal && !global && res) obj = res;
-        else if(!global && !preglobal && res) obj[1].children[res[0]] = res[1];
+        else if(!global && !preglobal && res){
+             obj[1].children[res[0]] = res[1];
+             obj[1].childArr.push(res);
+        }
         else if(res == 1) heirarchy[obj[0]] = obj[1];
     }
     return heirarchy;
