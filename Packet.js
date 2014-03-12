@@ -1,3 +1,5 @@
+var iclass = require("../classParse")("../virtualground.iclass");
+
 function Packet(buf){
     this.buf = buf;
     this.offset = 0;
@@ -31,6 +33,14 @@ Packet.prototype.readType = function(t) {
     if(t == "int16")  return this.readInt16();
     if(t == "int32")  return this.readInt32();
     if(t == "string") return this.readString();
+    if(iclass[t]) {
+        var nclass = JSON.parse(JSON.stringify(iclass[class_n]));
+        
+        for(var i = 0; i < iclass[t].childArr.length; ++i)
+            if(iclass[t].childArr[i].type == 'declaration')
+                nclass.childArr[i].value = this.readType(iclass[t].childArr[i].datatype); 
+        return nclass;
+    }
 }
 function OutPacket(){
     this.buf = [];
@@ -62,6 +72,11 @@ OutPacket.prototype.writeType = function(t,v) {
     if(t == "int16")  this.writeInt16(v);
     if(t == "int32")  this.writeInt32(v);
     if(t == "string") this.writeString(v);
+    
+    if(iclass[t]) 
+        for(var i = 0; i < v.childArr.length; ++i)
+            if(v.childArr[i].type == 'declaration')
+                this.writeType(v.childArr[i].datatype);
 }
 
 OutPacket.prototype.serialize = function(){ var l = this.buf.length; return new Buffer([l & 0xFF, (l >> 8) & 0xFF].concat(this.buf));  };
