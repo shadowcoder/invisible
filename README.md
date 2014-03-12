@@ -33,7 +33,8 @@ Properties may be prefixed with keywords, which modify their behavior:
 get: calls the implied function getPropertyName(), which should be defined in the server-class implementation
 set: calls the implied function setPropertyName(value), which should be defined in the server-class implementation
 public: anyone may read or write
-publicread: anyone may read, but only privileged members may write
+publicread: anyone may read, but only privileged members may write'
+serverwrite: anyone may read, but only the server may write
 private: only privileged members may access
 
 Functions may also be prefixed with keywords, which modify their accessibility:
@@ -51,7 +52,7 @@ class HelloWorld {
 Class serialization:
 
 Classes are serialized as:
-[uint16 num properties] [Property[]] [uint16 num functions] [Functions[]]
+[uint8 num properties] [Property[]] [uint8 num functions] [Functions[]]
 
 Properties are serialized as:
 [uint8 num keywords] [Keyword[]] [Type type] [string name]
@@ -59,7 +60,7 @@ Properties are serialized as:
 Keywords + Types are uint8s indexing the table above.
 
 Functions are serialized as:
-[uint8 num keywords] [FunctionKeyword[]] [string name] [uint16 numParams] [Param[]]
+[uint8 num keywords] [FunctionKeyword[]] [string name] [uint8 numParams] [Param[]]
 
 Params are serialized as:
 [Type type] [string name]
