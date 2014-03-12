@@ -6,10 +6,10 @@ Invisible networking...
 Protocol
 =========
 
-[uint16 message length] [uint32 object ID] [uint16 property] PAYLOAD
+[uint16 message length] [uint32 object ID] [uint8 propertyCount] { [uint16 property] PAYLOAD} (repeated propertyCount times)
 
 If property is a function, it will call the function, concatenating parameters.
-If property is a basic type, it will concatenate the operation (0 for read, 1 for write) as a single byte. Upon writing, the type's value will be concatenated. Upon reading, the server will respond with a write packet.
+If property is a basic type, it will be in writing mode. The property's value will be concatenated, and if the packet is sent by a client the value is broadcasted.
 If property is a complex type (structure or class), it will recursively embed property id's until a basic type is reached.
 
 Unless noted otherwise, all integer types are little-endian:
