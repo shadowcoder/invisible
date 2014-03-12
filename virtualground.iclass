@@ -1,12 +1,20 @@
-class Room {
-    public void Room(string name);
-    serverwrite string name;
-    publicread User[] users;
-    public void joinRoom();
+class ZoneManager {
+	private Zone[] zones;
+	public void addZone(Zone z);
+}
+
+class Zone {
+	public void Zone(string name);
+	serverwrite string name;
+	serverwrite User[] users;
+	public void broadcast(uint8[] msg);
+    public void joinZone();
 }
 
 class User {
-    public void User(string name);
+    public void User(string name, js socket);
     serverwrite string name;
+    private js socket;
     private void move(int16 x, int16 y);
+	serverwrite Zone currentZone;
 }

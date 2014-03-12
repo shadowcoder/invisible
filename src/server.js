@@ -7,16 +7,11 @@ var iclass = require("../classParse")("../virtualground.iclass");
 
 function propByName(class_n, prop) { return iclass[class_n].childArr[iclass[class_n].children[prop]] };
 
-propByName("User", "move").function = function(x, y) {
-    console.log("Moving to "+x+","+y);
-}
-
 var classd = fs.readFileSync("../virtualground.classd").toString();
 
 var reg = /\s*^[^ ]* ([^:]*)::([^\(]*)\(([^\)]*)[^\n]*([^\}]*)}/g;
 while(res = reg.exec(classd)) {
-    console.log(res);
-    var params_t = res[3].split(/,\s*/).join(" ").split(" ");
+var params_t = res[3].split(/,\s*/).join(" ").split(" ");
     for(var f = 1, params = []; f < params_t.length; f+=2) params.push(params_t[f]);
     propByName(res[1], res[2]).function = eval("(function("+params.join(",")+"){"+res[4].trim().replace(/\n/g, ";")+"})");
     
@@ -56,9 +51,8 @@ net.createServer(function(conn) {
             var field = objs[objID].childArr[property];
             console.log(field);
             
-            //TODO: access, logic
+            //TODO: access
             if(field[1].type == 'method') {
-                // recursively read parameters
                 var params = [];
                 for(var i = 0; i < field[1].params.length; i++) params.push(d.readType(field[1].params[i][1]));
         
