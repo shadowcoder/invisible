@@ -11,7 +11,8 @@ function serializeLine(line) {
                 type: pcomps[0],
                 parent: true,
                 children: {},
-                childArr: []
+                childArr: [],
+                reverseChildren: []
             }
         ];
     } else if(!global && line.trim() == "}") {
@@ -59,8 +60,9 @@ module.exports = function(file) {
     
         if(preglobal && !global && res) obj = res;
         else if(!global && !preglobal && res){
-             obj[1].children[res[0]] = res[1];
+             obj[1].children[res[0]] = obj[1].childArr.length; // reference
              obj[1].childArr.push(res);
+             obj[1].reverseChildren.push(res[0]);
         }
         else if(res == 1) heirarchy[obj[0]] = obj[1];
     }
