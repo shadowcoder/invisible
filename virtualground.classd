@@ -1,26 +1,34 @@
 void ZoneManager::addZone(Zone z) {
-    this.property("zones").value.push(z);
+    this.m_zones.push(z);
 }
 
 void Zone::Zone(string n) {
-    this.property("name").value = n;
-    this.property("zones").value = [];
+    this.m_name = n;
+    this.m_zones = [];
 }
 
 void Zone::broadcast(uint8[] msg) {
-    for(var i = 0; i < this.property("users").length; ++i)
-        this.foreignProperty(this.property("users").value[i], "socket").value.send(new Buffer(msg));
+    for(var i = 0; i < this.m_users.length; ++i)
+       this.m_users[i].m_socket.send(new Buffer(msg));
 }
 
 void Zone::joinZone() {
-    this.property("users").value.push(this.caller);
+    this.m_users.push(this.caller);
+}
+
+void Zone::leaveZone() {
+    this.m_users.splice(this.m_users.indexOf(this.caller), 1);
 }
 
 void User::User(string name, js socket) {
-    this.property("name").value = name;
-    this.property("socket").value = socket;
+    this.m_name = name;
+    this.m_socket = socket;
 }
 
 void User::move(int16 x, int16 y) {
-    console.log("#move "+x+","+y);
+    console.log("Ping");
+    console.log(this.m_x+","+this.m_y);
+    this.m_x = x;
+    this.m_y = y;
+    console.log(this.m_x+","+this.m_y);
 }

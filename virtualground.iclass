@@ -5,10 +5,11 @@ class ZoneManager {
 
 class Zone {
 	public void Zone(string name);
-	serverwrite string name;
-	serverwrite User[] users;
+	private string name;
+	private User[] users;
 	public void broadcast(uint8[] msg);
     public void joinZone();
+    public void leaveZone();
 }
 
 class User {
@@ -16,5 +17,7 @@ class User {
     serverwrite string name;
     private js socket;
     private void move(int16 x, int16 y);
+    serverwrite int16 x;
+    serverwrite int16 y;
 	serverwrite Zone currentZone;
 }
