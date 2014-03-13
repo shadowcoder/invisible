@@ -20,7 +20,6 @@ Packet.prototype.readString = function(){ return this.readBlob(this.readUInt16()
 Packet.prototype.readType = function(t) {
     if(t.indexOf("]") > -1) { // TODO: optimize regex
         var arraySize = t.match(/^([^\[]*)\[([0-9]*)\]$/);
-        console.log(t+" "+arraySize)
         if(arraySize[2].length) var len = arraySize[2];
         else len = this.readUInt16();
         
@@ -59,7 +58,13 @@ OutPacket.prototype.writeInt64 = function(b){ this.writeUInt64(b); };
 OutPacket.prototype.writeBlob = function(b){ this.writeUInt16(b.length); this.buf = this.buf.concat(b); };
 OutPacket.prototype.writeString = function(str){ this.writeUInt16(str.length); var i = 0; while(i < str.length){ this.buf.push(str[i].charCodeAt(0));++i;}};
 OutPacket.prototype.writeType = function(t,v) {
-    if(t.indexOf("]") && arraySize=t.match(/^([^\[]*)\[([0-9]*)\]$/)) {
+    if(t == "js"){
+        console.log(t+";"+v);
+        this.writeType(v[1], v[0]); // required for return voodoo
+    } 
+    
+    if(t.indexOf("]") > -1) {
+        var arraySize=t.match(/^([^\[]*)\[([0-9]*)\]$/);
         if(arraySize[2].length) var len = arraySize[2];
         else {
             len = v.length;
@@ -76,10 +81,21 @@ OutPacket.prototype.writeType = function(t,v) {
     if(t == "int32")  this.writeInt32(v);
     if(t == "string") this.writeString(v);
     
-    if(iclass[t]) 
+    if(iclass[t]) {
+        console.log(t+","+v[0]);
         for(var i = 0; i < v.childArr.length; ++i)
-            if(v.childArr[i].type == 'declaration')
-                this.writeType(v.childArr[i].datatype);
+            if(v.childArr[i][1].type == 'declaration') {
+                var permission = false;
+                console.log(v.childArr[i][1].mods);
+                for(var j = 0; j < v.childArr[i][1].mods.length; ++j)
+                    if(["public", "publicread", "serverwrite"].indexOf(v.childArr[i][1].mods[j]) > -1)
+                        permission = true;            
+                if(permission) this.writeType(v.childArr[i][1].datatype, v.childArr[i][1].value);
+                
+            }
+        
+    }
+    
 }
 
 OutPacket.prototype.serialize = function(){ var l = this.buf.length; return new Buffer([l & 0xFF, (l >> 8) & 0xFF].concat(this.buf));  };

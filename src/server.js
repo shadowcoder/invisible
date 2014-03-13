@@ -36,7 +36,7 @@ function setPacket(obj, prop, v) {
     var ind = objs[obj].children[prop];
     packet.writeUInt8(ind); // field
     packet.writeUInt8(1); // count: TODO
-    packet.writeType(objs[obj].childArr[ind].datatype, v);
+    packet.writeType(objs[obj].childArr[ind][1].datatype, v);
     return packet;
 }
 
@@ -45,10 +45,11 @@ function functionPacket(obj, prop, params) {
     packet.writeUInt32(obj); // objID
     var ind = objs[obj].children[prop];
     
+    packet.writeUInt8(1); // count: TODO
     packet.writeUInt8(ind); // field
-    packet.writeUInt8(1); // count: TODO    
-    var params_l = objs[obj].childArr[ind].params;
-    for(var i = 0; i < params_l.length; ++i) packet.writeType(params_l[i].datatype, params[i]);
+    var params_l = objs[obj].childArr[ind][1].params;
+    console.log(JSON.stringify(params_l));
+    for(var i = 0; i < params_l.length; ++i) packet.writeType(params_l[i][1], params[i]);
     return packet;
 }
 
@@ -87,10 +88,10 @@ var GlobalManager = netConstruct("GlobalManager");
 var VirtualGround = netConstruct("Zone", "Virtual Ground");
 
 net.createServer(function(conn) {
-    var thisUser = netConstruct("User", "Player"+Math.floor(Math.random*1000), conn, VirtualGround);
+    var thisUser = netConstruct("User", "Player"+Math.floor(Math.random()*1000), conn, objs[VirtualGround]);
     
     conn.on('data', function(d) {
-        try {
+       // try {
             d = new Packet(d);
         var objID = d.readUInt32();
         
@@ -104,8 +105,11 @@ net.createServer(function(conn) {
                 var params = [];
                 for(var i = 0; i < field[1].params.length; i++) params.push(d.readType(field[1].params[i][1]));
                 
-                var ret = propByName(objsTypes[objID], objs[objID].reverseChildren[property]).function.apply(new ExtensionContext(objs[objID], thisUser), params);
-                
+                var ret = propByName(objsTypes[objID], objs[objID].reverseChildren[property]).function.apply(new ExtensionContext(objs[objID], objs[thisUser]), params);
+                console.log(field);
+                if(field[1].returns != 'void') {
+                    conn.write(functionPacket(GlobalManager, "return", [objID, property, [ret, field[1].returns]]).serialize());
+                }
         
                 console.log(field[0]+"("+params+")");
             } else if(field[1].type == 'declaration') {
@@ -114,8 +118,8 @@ net.createServer(function(conn) {
                 
             }
         }
-    } catch(e) {
+        /*} catch(e) {
         console.log(e);
-    }
+    }*/
     });
 }).listen(1234);

@@ -1,4 +1,5 @@
 class GlobalManager {
+    private void return(uint32 obj, uint8 property, js val);
     public User whoAmI();
 }
 
@@ -23,5 +24,5 @@ class User {
     private void move(int16 x, int16 y);
     serverwrite int16 x;
     serverwrite int16 y;
-	serverwrite Zone currentZone;
+	private Zone currentZone;
 }

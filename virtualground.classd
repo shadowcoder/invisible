@@ -26,6 +26,7 @@ void Zone::leaveZone() {
 }
 
 void User::User(string name, js socket, Zone initialZone) {
+    console.log(this.m_name);
     this.m_name = name;
     this.m_socket = socket;
     this.m_currentZone = initialZone;
