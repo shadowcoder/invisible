@@ -1,15 +1,20 @@
+User GlobalManager::whoAmI() {
+    return this.caller;
+}
+
 void ZoneManager::addZone(Zone z) {
     this.m_zones.push(z);
 }
 
 void Zone::Zone(string n) {
     this.m_name = n;
-    this.m_zones = [];
+    this.m_users = [];
+    console.log("m_name="+this.m_name);
 }
 
-void Zone::broadcast(uint8[] msg) {
+void Zone::broadcast(js msg) {
     for(var i = 0; i < this.m_users.length; ++i)
-       this.m_users[i].m_socket.send(new Buffer(msg));
+       this.m_users[i].m_socket.send(msg.serialize());
 }
 
 void Zone::joinZone() {
@@ -20,15 +25,13 @@ void Zone::leaveZone() {
     this.m_users.splice(this.m_users.indexOf(this.caller), 1);
 }
 
-void User::User(string name, js socket) {
+void User::User(string name, js socket, Zone initialZone) {
     this.m_name = name;
     this.m_socket = socket;
+    this.m_currentZone = initialZone;
 }
 
 void User::move(int16 x, int16 y) {
-    console.log("Ping");
-    console.log(this.m_x+","+this.m_y);
     this.m_x = x;
     this.m_y = y;
-    console.log(this.m_x+","+this.m_y);
 }

@@ -24,8 +24,32 @@ function netConstruct(class_n) {
     objs.push(JSON.parse(JSON.stringify(iclass[class_n])));
     objsTypes.push(class_n);
     var args = [].slice.call(arguments, 1);
-    // TODO: constructors
+    var constructor = objs[objs.length-1].children[class_n];
+    if( constructor + 1)
+        iclass[class_n].childArr[constructor].function.apply(new ExtensionContext(objs[objs.length-1], null), args);
     return objs.length - 1;
+}
+
+function setPacket(obj, prop, v) {
+    var packet = new OutPacket();
+    packet.writeUInt32(obj); // objID
+    var ind = objs[obj].children[prop];
+    packet.writeUInt8(ind); // field
+    packet.writeUInt8(1); // count: TODO
+    packet.writeType(objs[obj].childArr[ind].datatype, v);
+    return packet;
+}
+
+function functionPacket(obj, prop, params) {
+    var packet = new OutPacket();
+    packet.writeUInt32(obj); // objID
+    var ind = objs[obj].children[prop];
+    
+    packet.writeUInt8(ind); // field
+    packet.writeUInt8(1); // count: TODO    
+    var params_l = objs[obj].childArr[ind].params;
+    for(var i = 0; i < params_l.length; ++i) packet.writeType(params_l[i].datatype, params[i]);
+    return packet;
 }
 
 function ExtensionContext(obj, caller) {
@@ -40,7 +64,6 @@ function ExtensionContext(obj, caller) {
         if(p[1].type == "declaration") {
             (function() { 
                 var p2 = p;
-                console.log(p2);
                 Object.defineProperty(t_con, "m_"+p2[0], {
                     get: function() {
                         return p2[1].value;
@@ -60,26 +83,29 @@ function ExtensionContext(obj, caller) {
     }
 }
 
-var shadowcoder = netConstruct("User", "shadowcoder");
+var GlobalManager = netConstruct("GlobalManager");
+var VirtualGround = netConstruct("Zone", "Virtual Ground");
 
 net.createServer(function(conn) {
+    var thisUser = netConstruct("User", "Player"+Math.floor(Math.random*1000), conn, VirtualGround);
+    
     conn.on('data', function(d) {
-        d = new Packet(d);
+        try {
+            d = new Packet(d);
         var objID = d.readUInt32();
         
         var propertyCount = d.readInt8();
         while(propertyCount--) {
             var property = d.readInt16();
             var field = objs[objID].childArr[property];
-            console.log(field);
             
             //TODO: access, zones
             if(field[1].type == 'method') {
                 var params = [];
                 for(var i = 0; i < field[1].params.length; i++) params.push(d.readType(field[1].params[i][1]));
                 
-                console.log(objsTypes[objID]+"::"+objs[objID].reverseChildren[property])
-                propByName(objsTypes[objID], objs[objID].reverseChildren[property]).function.apply(new ExtensionContext(objs[objID], shadowcoder), params);
+                var ret = propByName(objsTypes[objID], objs[objID].reverseChildren[property]).function.apply(new ExtensionContext(objs[objID], thisUser), params);
+                
         
                 console.log(field[0]+"("+params+")");
             } else if(field[1].type == 'declaration') {
@@ -88,5 +114,8 @@ net.createServer(function(conn) {
                 
             }
         }
+    } catch(e) {
+        console.log(e);
+    }
     });
 }).listen(1234);

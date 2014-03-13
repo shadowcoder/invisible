@@ -5,7 +5,7 @@ var client = net.connect({port: 1234},
   console.log('client connected');
   
   client.write(new Buffer([0x09, 0x00, // len
-                          0x00, 0x00, 0x00, 0x00,  // objID,
+                          0x02, 0x00, 0x00, 0x00,  // objID,
                           0x01, // propertyCount
                           0x03, 0x00, // property,
                           50, 0, // X
